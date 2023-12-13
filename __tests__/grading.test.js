@@ -7,19 +7,19 @@ const { JSDOM } = require("jsdom");
 const { window } = new JSDOM(fs.readFileSync(path.resolve(__dirname, "../index.html"), 'utf8'));
 const { document } = window;
 const { screen } = require('@testing-library/jest-dom');
-
+​
 var studentFunctions = require('../scriptHelper.js');
 let script = fs.readFileSync(path.resolve(__dirname, "../script.js"), 'utf8');
-
+​
 const studentPlanet = studentFunctions.pickPlanet.toString();
-
+​
 const planetsResponse = [
    {
       "name": "Tatooine",
       "diameter": "10465 km",
       "star": "Tatoo I & Tatoo II",
       "distance": "43000 light years from galactic core",
-      "image": "https://www.nasa.gov/sites/default/files/images/587837main_Kepler16_transit_art2_full.jpg",
+      "image": "https://www.nasa.gov/wp-content/uploads/2023/03/earthsun20170412.png",
       "moons": 3
    },
    {
@@ -27,7 +27,7 @@ const planetsResponse = [
        "diameter": "measurement is under dispute",
        "star": "Alpha Sagittarius (a.k.a. Rukbat)",
        "distance": "Varies - find a library",
-       "image": "https://www.nasa.gov/centers/langley/images/content/698148main_Brains_904_2.jpg",
+       "image": "https://smd-cms.nasa.gov/wp-content/uploads/2023/07/stsci-01h44ay5ztcv1npb227b2p650j-temp-medium.jpg?w=2560&format=webp",
        "moons": 2
    },
    {
@@ -51,7 +51,7 @@ const planetsResponse = [
        "diameter": "34500 km",
        "star": "K2-18",
        "distance": "110 light years from Earth",
-       "image": "https://www.nasa.gov/sites/default/files/thumbnails/image/heic1916a.jpg",
+       "image": "https://www.nasa.gov/wp-content/uploads/2023/09/sep-11-23-stsci-01h9r8bbf7kfspgq2xx3a8sz34-1k.jpg",
        "moons": "unknown"
    },
    {
@@ -63,12 +63,12 @@ const planetsResponse = [
        "moons": 0
    }
  ];
-
-
+​
+​
 describe('Test student work on helper functions', () => {
-
+​
    let list, h2, pilotStatus, copilotStatus, fuelStatus, cargoStatus;
-
+​
    beforeEach(() => {
       list = document.getElementById("faultyItems");
       h2 = document.getElementById("launchStatus");
@@ -77,13 +77,13 @@ describe('Test student work on helper functions', () => {
       fuelStatus = document.getElementById("fuelStatus");
       cargoStatus = document.getElementById("cargoStatus");
     });
-
+​
    test("Function properly validates text", () => {
       expect(studentFunctions.validateInput("")).toEqual("Empty");
       expect(studentFunctions.validateInput("asdf")).toEqual("Not a Number");
       expect(studentFunctions.validateInput("10")).toEqual("Is a Number");
    });
-
+​
    test('List is properly initialized', () => {
       expect(list).not.toBeVisible(); 
       expect(h2).toHaveTextContent("Awaiting Information Before Launch");
@@ -92,7 +92,7 @@ describe('Test student work on helper functions', () => {
       expect(fuelStatus).toHaveTextContent("Fuel level high enough for launch");
       expect(cargoStatus).toHaveTextContent("Cargo mass low enough for launch");
    });
-
+​
    test("Launch Checklist when fuel too low for launch", () => {
          // Shuttle should be not be ready for launch, fuel too low
          studentFunctions.formSubmission(document, list, "Chris", "Bob", 0, 5);
@@ -104,7 +104,7 @@ describe('Test student work on helper functions', () => {
          expect(fuelStatus).toHaveTextContent("Fuel level too low for launch");
          expect(cargoStatus).toHaveTextContent("Cargo mass low enough for launch");
    });
-
+​
    test("Launch Checklist when cargo too heavy for launch", () => {
       // Shuttle should not be ready for launch, cargo too high
       studentFunctions.formSubmission(document, list, "Chris", "Bob", 10000, 100000);
@@ -116,7 +116,7 @@ describe('Test student work on helper functions', () => {
       expect(fuelStatus).toHaveTextContent("Fuel level high enough for launch");
       expect(cargoStatus).toHaveTextContent("Cargo mass too heavy for launch");
    });
-
+​
    test("Launch Checklist when cargo too heavy and fuel too low for launch", () => {
       // Shuttle should not be ready for launch, cargo too high, fuel too low
       studentFunctions.formSubmission(document, list, "Chris", "Bob", 0, 100000);
@@ -128,7 +128,7 @@ describe('Test student work on helper functions', () => {
       expect(fuelStatus).toHaveTextContent("Fuel level too low for launch");
       expect(cargoStatus).toHaveTextContent("Cargo mass too heavy for launch");
    });
-
+​
    test("Launch Checklist when everything is good to go", () => { 
       // Shuttle should be ready for launch, enough fuel and cargo
       studentFunctions.formSubmission(document, list, "Chris", "Bob", 10000, 1);
@@ -140,7 +140,7 @@ describe('Test student work on helper functions', () => {
       expect(fuelStatus).toHaveTextContent("Fuel level high enough for launch");
       expect(cargoStatus).toHaveTextContent("Cargo mass low enough for launch");
    });
-
+​
    test("Mission target has the appropriate info", () => {
       let missionTarget = document.getElementById("missionTarget");
       let testTarget = missionTarget.innerHTML.replace(/\s/g,'');
@@ -149,22 +149,22 @@ describe('Test student work on helper functions', () => {
       testTarget = missionTarget.innerHTML.replace(/\s/g,'');
       expect(testTarget).toBe('<h2>MissionDestination</h2><ol><li>Name:Saturn/Titan</li><li>Diameter:5149.5km</li><li>Star:Sol</li><li>DistancefromEarth:1.4billionkmfromEarth</li><li>NumberofMoons:0</li></ol><imgsrc="https://solarsystem.nasa.gov/system/resources/detail_files/16278_PIA20016.jpg">');
    });
-
+​
    test("Script contains calls to appropriate helper functions", () => {
       expect(script.includes("formSubmission(")).toBeTruthy();
       expect(script.includes("myFetch(")).toBeTruthy();
       expect(script.includes("pickPlanet(")).toBeTruthy();
       expect(script.includes("addDestinationInfo(")).toBeTruthy();
    });
-
+​
    test("Student selects planet at random", () => {
       expect(studentPlanet.includes("Math.random()")).toBeTrue;
       expect(planetsResponse.includes(studentFunctions.pickPlanet(planetsResponse))).toBe(true);
   });
-
+​
   test("Student is fetching list of planets", async function() {
       const result = await studentFunctions.myFetch();
       expect(result).toEqual(planetsResponse);
    });
-
+​
 });
