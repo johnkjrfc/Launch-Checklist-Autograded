@@ -1,5 +1,5 @@
 // Write your helper functions here!
-
+//export { addDestinationInfo, validateInput, formSubmission, myFetch, pickPlanet };
 require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
@@ -31,14 +31,9 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  //this will take in a document parameter and strings representing the pilot, co-pilot, fuel level, and cargo mass.
  //use validateInput to verify inputs 
  function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    event.preventDefault();
-
-    const pilotName = document.getElementByID("pilotName").value;
-    const copilotName = document.querySelector('input[name="copilotName"]');
-    const fuelLevel = document.querySelector('input[name="fuelLevel"]');
-    const cargoMass = document.querySelector('input=[name="cargoMass"]');
+    console.log('form submitted')
     //array of the input values
-    const inputFields = [pilotName, copilotName, fuelLevel, cargoMass];
+    const inputFields = [pilot.value, copilot.value, fuelLevel.value, cargoLevel.value];
     
 
     for (let i = 0; i < inputFields.length; i++) {
