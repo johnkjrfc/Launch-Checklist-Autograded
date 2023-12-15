@@ -1,5 +1,5 @@
 // Write your helper functions here!
-//export { addDestinationInfo, validateInput, formSubmission, myFetch, pickPlanet };
+
 require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
@@ -19,7 +19,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  
  //validateInput() should take in a string as a parameter and return "Empty", "Not a Number", or "Is a Number" as appropriate, and Add an alert at form submission to notify the user that all fields are required. 
  function validateInput(testInput) {
-    if (testInput.trim() === "") {
+    if (testInput === "") {
         return "Empty";
     }
    if (isNaN(testInput)) {
@@ -51,8 +51,38 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
             break;
         }
         
+        console.log("Form passes validation")
     }
+    const updatePilot = document.getElementById("pilotStatus");
+    updatePilot.innerHTML = `Pilot ${pilot.value} is ready for launch`;
+    const updateCopilot = document.getElementById("copilotStatus");
+    updateCopilot.innerHTML = `Copilot ${copilot.value} is ready for launch`;
+    
+    const updateLaunchStatus = document.getElementById("launchStatus");
+    const faultyItems = document.getElementById("faultyItems");
+    const updateFuel = document.getElementById("fuelStatus");
+    const updateCargo = document.getElementById("cargoStatus")
+    
+    function cancelLaunch() {
+        
+        faultyItems.style = "visibility: visible";
+        updateLaunchStatus.innerHTML = "Shuttle not ready for launch";
+        updateLaunchStatus.style.color = "red";       
 
+    }
+    if (fuelLevel.value < 10000) {
+        updateFuel.innerHTML = "There is not enough fuel for the journey";
+        cancelLaunch();    
+    }
+    if (cargoLevel.value > 10000) {
+        updateCargo.innerHTML = "there is too much mass for the shuttle to take off.";
+        cancelLaunch();
+    } 
+    if(fuelLevel.value >= 10000 && cargoLevel.value <= 10000) {
+        updateLaunchStatus.innerHTML = "Shuttle is ready for launch";
+        updateLaunchStatus.style.color = "green"
+    }
+    
  }
  
  async function myFetch() {
