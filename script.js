@@ -23,7 +23,7 @@ window.addEventListener("load", function () {
         let list = document.getElementById("faultyItems");
         event.preventDefault();
         console.log(pilot.value, copilot.value, fuelLevel.value, cargoLevel.value)
-        formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel);
+        formSubmission(document, list, pilot.value, copilot.value, fuelLevel.value, cargoLevel.value);
         console.log("form received");
 
 

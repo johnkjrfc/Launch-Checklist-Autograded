@@ -33,7 +33,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     console.log('form submitted')
     //array of the input values
-    const inputFields = [pilot.value, copilot.value, fuelLevel.value, cargoLevel.value];
+    const inputFields = [pilot, copilot, fuelLevel, cargoLevel];
     
 
     for (let i = 0; i < inputFields.length; i++) {
@@ -54,9 +54,9 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         console.log("Form passes validation")
     }
     const updatePilot = document.getElementById("pilotStatus");
-    updatePilot.innerHTML = `Pilot ${pilot.value} is ready for launch`;
+    updatePilot.innerHTML = `Pilot ${pilot} is ready for launch`;
     const updateCopilot = document.getElementById("copilotStatus");
-    updateCopilot.innerHTML = `Copilot ${copilot.value} is ready for launch`;
+    updateCopilot.innerHTML = `Co-pilot ${copilot} is ready for launch`;
     
     const updateLaunchStatus = document.getElementById("launchStatus");
     const faultyItems = document.getElementById("faultyItems");
@@ -66,20 +66,24 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     function cancelLaunch() {
         
         faultyItems.style = "visibility: visible";
-        updateLaunchStatus.innerHTML = "Shuttle not ready for launch";
+        updateLaunchStatus.innerHTML = "Shuttle Not Ready for Launch";
         updateLaunchStatus.style.color = "red";       
 
     }
-    if (fuelLevel.value < 10000) {
-        updateFuel.innerHTML = "There is not enough fuel for the journey";
+    if (fuelLevel < 10000) {
+        updateFuel.innerHTML = "Fuel level too low for launch";
         cancelLaunch();    
+    }else {
+        updateFuel.innerHTML = "Fuel level high enough for launch"
     }
-    if (cargoLevel.value > 10000) {
-        updateCargo.innerHTML = "there is too much mass for the shuttle to take off.";
+    if (cargoLevel > 10000) {
+        updateCargo.innerHTML = "Cargo mass too heavy for launch";
         cancelLaunch();
-    } 
-    if(fuelLevel.value >= 10000 && cargoLevel.value <= 10000) {
-        updateLaunchStatus.innerHTML = "Shuttle is ready for launch";
+    } else {
+        updateCargo.innerHTML = "Cargo mass low enough for launch"
+    }
+    if(fuelLevel >= 10000 && cargoLevel <= 10000) {
+        updateLaunchStatus.innerHTML = "Shuttle is Ready for Launch";
         updateLaunchStatus.style.color = "green"
     }
     
