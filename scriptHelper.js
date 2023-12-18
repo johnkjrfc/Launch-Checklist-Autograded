@@ -43,13 +43,13 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
         if (validationStatus === "Empty") {
             alert("All fields are required!");
-            break;
+            return;
         } else if (validationStatus === "Not a Number" && (i === 2 || i === 3)) {
             alert("Fuel Level and/or Cargo Mass must be valid numbers");
-            break;
+            return;
         } else if (validationStatus === "Is a Number" && (i === 0 || i === 1)) {
             alert("Pilot Name and/or Copilot names are invalid");
-            break;
+            return;
         }
 
         console.log("Form passes validation")
