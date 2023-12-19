@@ -1,7 +1,9 @@
-// Write your helper functions here!
+// Demo script:
+//describe modules myFetch, pickPlanets, addDestinationInfo. Then the first block of event listener. Then page demo
+//describe validateInput, formSubmission, then secondary event listener. then page demo. 
 
 require('cross-fetch/polyfill');
-
+//
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     const missionTarget = document.getElementById("missionTarget");
     //update html
@@ -18,7 +20,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     `
 }
 
-//validateInput() should take in a string as a parameter and return "Empty", "Not a Number", or "Is a Number" as appropriate, and Add an alert at form submission to notify the user that all fields are required. 
+//validateInput() should take in a string as a parameter and return "Empty", "Not a Number", or "Is a Number" as appropriate, 
 function validateInput(testInput) {
     if (testInput === "") {
         return "Empty";
@@ -55,8 +57,8 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         console.log("Form passes validation")
     }
     const updatePilot = document.getElementById("pilotStatus");
-    updatePilot.innerHTML = `Pilot ${pilot} is ready for launch`;
     const updateCopilot = document.getElementById("copilotStatus");
+    updatePilot.innerHTML = `Pilot ${pilot} is ready for launch`;
     updateCopilot.innerHTML = `Co-pilot ${copilot} is ready for launch`;
 
     const updateLaunchStatus = document.getElementById("launchStatus");
